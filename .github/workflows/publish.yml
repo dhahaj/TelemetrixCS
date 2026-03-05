@@ -1,0 +1,36 @@
+name: Publish NuGet Package
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'   # triggers on tags like v1.0.1
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write  # ← Required for Trusted Publishing OIDC
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Pack
+        run: dotnet pack TelemetrixCS.csproj --configuration Release --output nupkgs
+
+      - name: NuGet Login (get temp API key via OIDC)
+        uses: nuget/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}   # your nuget.org username
+
+      - name: Publish to NuGet.org
+        run: dotnet nuget push nupkgs/*.nupkg -k ${{ steps.login.outputs.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

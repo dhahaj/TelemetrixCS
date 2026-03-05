@@ -8,7 +8,7 @@
     <AssemblyName>TelemetrixCS</AssemblyName>
     <RootNamespace>TelemetrixCS</RootNamespace>
     <Description>C# port of the Telemetrix Arduino client library – digital/analog/I2C/SPI support.</Description>
-    <Version>1.0.1</Version>
+    <Version>1.2.0</Version>
 
     <!-- NuGet package metadata -->
     <PackageId>TelemetrixCS</PackageId>

@@ -2,3 +2,4 @@ obj/
 bin/
 .claude
 nupkg/
+TelemetrixCS.sln

@@ -23,8 +23,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
+      # - name: Pack
+      #   run: dotnet pack TelemetrixCS.csproj --configuration Release --output nupkgs
+      
       - name: Pack
-        run: dotnet pack TelemetrixCS.csproj --configuration Release --output nupkgs
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"   # strip the leading 'v'
+          dotnet pack TelemetrixCS.csproj --configuration Release --output nupkgs /p:PackageVersion=$VERSION
 
       - name: NuGet Login (get temp API key via OIDC)
         uses: nuget/login@v1

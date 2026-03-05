@@ -33,4 +33,5 @@ jobs:
           user: ${{ secrets.NUGET_USER }}   # your nuget.org username
 
       - name: Publish to NuGet.org
-        run: dotnet nuget push nupkgs/*.nupkg -k ${{ steps.login.outputs.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        # run: dotnet nuget push nupkgs/*.nupkg -k ${{ steps.login.outputs.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push nupkgs/*.nupkg -k ${{ steps.login.outputs.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
